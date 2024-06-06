@@ -2,8 +2,7 @@ import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AlertService } from '@shared/services';
-import { of } from 'rxjs';
+import { SweetAlertService } from '@shared/services';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +23,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private alertService: AlertService
+    private alertService: SweetAlertService
   ) {
     // Initializes the login form with email and password fields.
     this.loginForm = this.fb.group({
@@ -38,12 +37,7 @@ export class LoginComponent {
    * Displays a success alert and navigates to the another page upon successful login.
    */
   public handleLogin(): void {
-    const msgObservable = of('Hey Buddy, You have Successfully LoggedIn'); // Assuming loadMessage is a method to load the message asynchronously
-    this.alertService.showAlert(msgObservable, 'success');
-
-    msgObservable.subscribe(() => {
-      // Once the message is loaded and ready, navigate to the registration page
-      this.router.navigate(['/registration']);
-    });
+    this.router.navigate(['/registration']);
+    this.alertService.showAlertPopup({title : "Success", text:"You have successfully login", icon: "success"});
   }
 }
